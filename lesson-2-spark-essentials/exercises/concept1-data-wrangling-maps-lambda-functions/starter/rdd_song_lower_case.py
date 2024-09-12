@@ -31,20 +31,22 @@ log_of_songs = [
 
 # parallelize the log_of_songs to use with Spark
 
-
+distributed_songs = sc.parallelize(log_of_songs)
 # show the original input data is preserved
-
+print(distributed_songs.count())
 
 # create a python function to convert strings to lowercase
 def convert_song_to_lowercase(song):
     return song.lower()
 
-print(convert_song_to_lowercase("Songtitle"))
+# print(convert_song_to_lowercase("Songtitle"))
 
 # use the map function to transform the list of songs with the python function that converts strings to lowercase
-
+transformed_date = distributed_songs.map(convert_song_to_lowercase).collect()
 
 # Show the original input data is still mixed case
-
+# print(transformed_date)
 
 # Use lambda functions instead of named functions to do the same map operation
+f_lambda = distributed_songs.map(lambda x:x.lower()).collect()
+# print(f_lambda,"lambda")
